@@ -48,36 +48,40 @@ int main()
 		std::cin>>choice;
 		if(choice==1)
 		{
-			std::cout<<"Enter your username:";
-			std::cin>>usn;
-			std::cout<<"Enter your password:";
-			std::cin>>psd;
-			fname=usn+".txt";
-			filei.open(fname.c_str());
-			if(!filei.is_open() && filei.fail())
+			for (int tries = 0; tries < 3; ++tries)
 			{
-				std::cout<<"\nYou are not registered, please register before logging in.\n";
-				filei.close();
-				continue;
-			}
-			getline(filei,usern);
-			getline(filei,line);
-			getline(filei,pw);
-			std::string storedHash = pw;
-			std::string password = psd;
-			bool isValid = bcrypt::validatePassword(psd, pw);
-			if(usn==usern && isValid)
-			{
-				std::cout<<"\nYou are successfully logged in:)\nYOUR PROFILE SAYS:\n";
-				std::cout<<"Username:"<<usern<<std::endl;
-				std::cout<<"Name:"<<line<<std::endl;
+				std::cout<<"Enter your username:";
+				std::cin>>usn;
+				std::cout<<"Enter your password:";
+				std::cin>>psd;
+				fname=usn+".txt";
+				filei.open(fname.c_str());
+				if(!filei.is_open() && filei.fail())
+				{
+					std::cout<<"\nYou are not registered, please register before logging in.\n";
+					filei.close();
+					continue;
+				}
+				getline(filei,usern);
 				getline(filei,line);
-				std::cout<<"Bio:"<<line<<std::endl;
-				filei.close();
-			}
-			else
-			{
-				std::cout<<"\nWrong username or password!\nPlease try again.\n";
+				getline(filei,pw);
+				std::string storedHash = pw;
+				std::string password = psd;
+				bool isValid = bcrypt::validatePassword(psd, pw);
+				if(usn==usern && isValid)
+				{
+					std::cout<<"\nYou are successfully logged in:)\nYOUR PROFILE SAYS:\n";
+					std::cout<<"Username:"<<usern<<std::endl;
+					std::cout<<"Name:"<<line<<std::endl;
+					getline(filei,line);
+					std::cout<<"Bio:"<<line<<std::endl;
+					filei.close();
+				break; // stop for loop
+				}
+				else
+				{
+					std::cout<<"\nWrong username or password!\nPlease try again.\n";
+				}
 			}
 			std::cout<<std::endl;
 		}
