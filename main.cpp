@@ -24,7 +24,7 @@ void valid(std::string str)
 		::tm++;
 		if(::tm==3)
 		{
-			std::cout<<"\nTHis username already exists\n Please try again.";
+			std::cout<<"\nThis username already exists\n Please try again.";
 			//file.close()
 			return;
 		}
